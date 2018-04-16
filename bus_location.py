@@ -9,7 +9,7 @@ def fetch(route_id: str):
     if response is None:
         return None
 
-    station_map = bus_station.fetch(route_id)
+    station_map = bus_station.get_map(route_id)
 
     return ''.join(
         map(lambda list_element: BusLocationList(list_element).print_simple(station_map), response)
@@ -18,4 +18,3 @@ def fetch(route_id: str):
 
 if __name__ == '__main__':
     print(fetch('219000025'))
-
