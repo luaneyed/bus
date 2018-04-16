@@ -12,12 +12,19 @@ routes = {
     '219000025': '상관 없는 테스트 노선'
 }
 
-result = '\n\n'.join(
-    [
-        '[버스 위치 정보] ({} | {})\n\n'.format(route_name, route_id) + fetch(route_id)
-        for route_id, route_name in routes.items()
-    ]
-)
 
-print(result)
-log(result)
+def run(enable_logging:bool = False):
+    result = '\n\n'.join(
+        [
+            '[버스 위치 정보] ({} | {})\n\n'.format(route_name, route_id) + fetch(route_id)
+            for route_id, route_name in routes.items()
+        ]
+    )
+
+    print(result)
+    if enable_logging:
+        log(result)
+
+
+if __name__ == '__main__':
+    run()
