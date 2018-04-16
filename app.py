@@ -18,14 +18,15 @@ def run(debug: bool = True):
         routes['219000025'] = '상관 없는 테스트 노선'
 
     now = datetime.utcnow() + timedelta(hours=9)
-    result = '[버스 위치 정보] ({})\n\n'.format(now.strftime('%Y-%m-%d %H:%M:%S'))\
-        + '\n'.join(
-            [
-                '({} | {})\n\n'.format(routes[route_id], route_id) + location
-                for route_id, location in {route_id: bus_location.fetch(route_id) for route_id in routes}.items()
-                if location is not None
-            ]
-        )
+
+    locations = [
+        '({} | {})\n\n'.format(routes[route_id], route_id) + location
+        for route_id, location in {route_id: bus_location.fetch(route_id) for route_id in routes}.items()
+        if location is not None
+    ]
+
+    result = '[버스 위치 정보] ({})'.format(now.strftime('%Y-%m-%d %H:%M:%S'))\
+        + (('\n\n' + '\n'.join(locations)) if locations else ' - 결과 없음')
 
     print(result)
     if not debug:
