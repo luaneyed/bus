@@ -5,13 +5,12 @@ from api import call
 # print(bus_arrival_item)
 
 
-def fetch(station_id: str, route_id: str, sta_order: str):
+def fetch(station_id: str, route_id: str):
     response = call(
         'busarrivalservice',
         {
             'stationId': station_id,
-            'routeId': route_id,
-            'staOrder': sta_order
+            'routeId': route_id
         }
     )
 
@@ -26,4 +25,5 @@ def fetch(station_id: str, route_id: str, sta_order: str):
     )
 
 
-# print(fetch('218000952', '241449005', '16'))
+if __name__ == '__main__':
+    print(fetch('218000952', '241449005'))
