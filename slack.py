@@ -1,5 +1,6 @@
 import json
 from urllib import request
+
 from config import SLACK_CONFIG
 
 webhook_url = 'https://hooks.slack.com/services/' + SLACK_CONFIG['webhook']

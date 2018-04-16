@@ -1,6 +1,7 @@
+from datetime import datetime, timedelta
+
 import bus_location
 from slack import log
-from datetime import datetime, timedelta
 
 routes = {
     '241449005': '15-1 | 고양,양주',

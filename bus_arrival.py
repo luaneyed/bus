@@ -1,36 +1,29 @@
-from urllib.request import Request, urlopen
-from urllib.parse import urlencode, quote_plus
-import xml.etree.ElementTree as Et
 from BusArrivalItem import BusArrivalItem
-from config import API
+from api import call
 
-url = 'http://openapi.gbis.go.kr/ws/rest/busarrivalservice'
+# bus_arrival_item = BusArrivalItem(xml_root.find('msgBody').find('busArrivalItem'))
+# print(bus_arrival_item)
 
-queryParams = '?' \
-              + urlencode(
-                    {
-                        quote_plus('serviceKey'): API['service_key'],
-                        quote_plus('stationId'): '218000952',
-                        quote_plus('routeId'): '241449005',
-                        quote_plus('staOrder'): '16'
-                    }
-                )
 
-request = Request(url + queryParams)
-request.get_method = lambda: 'GET'
-response_body = urlopen(request).read().decode('utf-8')
-xml_root = Et.fromstring(response_body)
+def fetch(station_id: str, route_id: str, sta_order: str):
+    response = call(
+        'busarrivalservice',
+        {
+            'stationId': station_id,
+            'routeId': route_id,
+            'staOrder': sta_order
+        }
+    )
 
-# com_msg_header = xml_root.find('comMsgHeader')
-msg_header = xml_root.find('msgHeader')
+    if response is None:
+        return None
 
-return_code = msg_header.find('resultCode').text
-if return_code == '4':
-    print('결과가 존재하지 않습니다.')
-    exit(0)
+    return ''.join(
+        map(
+            lambda list_element: str(BusArrivalItem(list_element)),
+            response
+        )
+    )
 
-# for c in com_msg_header:
-#     print(c)
 
-bus_arrival_item = BusArrivalItem(xml_root.find('msgBody').find('busArrivalItem'))
-print(bus_arrival_item)
+# print(fetch('218000952', '241449005', '16'))
