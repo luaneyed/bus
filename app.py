@@ -1,5 +1,6 @@
 import bus_location
 from slack import log
+from datetime import datetime, timedelta
 
 routes = {
     '241449005': '15-1 | 고양,양주',
@@ -16,13 +17,15 @@ def run(debug: bool = True):
     if debug:
         routes['219000025'] = '상관 없는 테스트 노선'
 
-    result = '\n\n'.join(
-        [
-            '[버스 위치 정보] ({} | {})\n\n'.format(routes[route_id], route_id) + location
-            for route_id, location in {route_id: bus_location.fetch(route_id) for route_id in routes}.items()
-            if location is not None
-        ]
-    )
+    now = datetime.utcnow() + timedelta(hours=9)
+    result = '[버스 위치 정보] ({})\n\n'.format(now.strftime('%Y-%m-%d %H:%M:%S'))\
+        + '\n'.join(
+            [
+                '({} | {})\n\n'.format(routes[route_id], route_id) + location
+                for route_id, location in {route_id: bus_location.fetch(route_id) for route_id in routes}.items()
+                if location is not None
+            ]
+        )
 
     print(result)
     if not debug:
