@@ -29,6 +29,12 @@ class BusLocationList:
                 self.remain_seat_cnt
             )
 
-    def print_simple(self):
-        return '정류소 ID : {}, 정류소 순서 : {}, 차량번호 : {}, 막차 여부 : {}\n'\
-            .format(self.station_id, self.station_seq, self.plate_no, self.end_bus)
+    def print_simple(self, station_map: dict):
+        return '차량번호 : {}, {:2d}번째 정류소 : {}  (ID : {}){}\n'\
+            .format(
+                self.plate_no,
+                self.station_seq,
+                station_map[self.station_id],
+                self.station_id,
+                ' <막차>' if (self.end_bus == '1') else ''
+            )
