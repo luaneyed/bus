@@ -8,12 +8,14 @@ routes = {
     '241449006': '15-1첫차 | 고양,양주',
     '235000090': '365-2 | 양주,파주',
     '235000080': '19 | 고양,서울,양주',
-    '235000081': '19-1 | 고양,서울,양주',
-    '219000025': '상관 없는 테스트 노선'
+    '235000081': '19-1 | 고양,서울,양주'
 }
 
 
-def run(enable_logging:bool = False):
+def run(debug: bool = True):
+    if debug:
+        routes['219000025'] = '상관 없는 테스트 노선'
+
     result = '\n\n'.join(
         [
             '[버스 위치 정보] ({} | {})\n\n'.format(routes[route_id], route_id) + location
@@ -23,7 +25,7 @@ def run(enable_logging:bool = False):
     )
 
     print(result)
-    if enable_logging:
+    if not debug:
         log(result)
 
 
