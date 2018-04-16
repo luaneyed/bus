@@ -26,7 +26,7 @@ def fetch(route_id: str):
 
     return_code = msg_header.find('resultCode').text
     if return_code == '4':
-        return '결과가 존재하지 않습니다.'
+        return None
 
     return ''.join(
         map(

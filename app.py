@@ -1,4 +1,4 @@
-from bus_location import fetch
+import bus_location
 from slack import log
 
 routes = {
@@ -16,8 +16,9 @@ routes = {
 def run(enable_logging:bool = False):
     result = '\n\n'.join(
         [
-            '[버스 위치 정보] ({} | {})\n\n'.format(route_name, route_id) + fetch(route_id)
-            for route_id, route_name in routes.items()
+            '[버스 위치 정보] ({} | {})\n\n'.format(routes[route_id], route_id) + location
+            for route_id, location in {route_id: bus_location.fetch(route_id) for route_id in routes}.items()
+            if location is not None
         ]
     )
 
