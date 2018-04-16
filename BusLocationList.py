@@ -30,5 +30,5 @@ class BusLocationList:
             )
 
     def print_simple(self):
-        return '정류소 ID : {}, 정류소 순서 : {}, 막차 여부 : {}\n'\
-            .format(self.station_id, self.station_seq, self.end_bus)
+        return '정류소 ID : {}, 정류소 순서 : {}, 차량번호 : {}, 막차 여부 : {}\n'\
+            .format(self.station_id, self.station_seq, self.plate_no, self.end_bus)
