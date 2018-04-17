@@ -30,11 +30,11 @@ class BusLocationList:
             )
 
     def print_simple(self, station_map: dict):
-        return '차량번호 : {}, {:2d}번째 정류소 : {}  (ID : {}){}\n'\
+        return '{:2d}번째 정류소 : {}  (ID : {}){} - {}\n'\
             .format(
-                self.plate_no,
-                self.station_seq,
+                int(self.station_seq),
                 station_map[self.station_id],
                 self.station_id,
-                ' <막차>' if (self.end_bus == '1') else ''
+                ' <막차>' if (self.end_bus == '1') else '',
+                self.plate_no
             )

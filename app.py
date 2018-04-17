@@ -6,7 +6,7 @@ from slack import log
 
 def run(debug: bool = True):
     routes = {'219000025': '상관 없는 테스트 노선'}\
-        if debug\
+        if debug \
         else {
             '241449005': '15-1 | 고양,양주',
             '241449011': '15-1구파발 | 고양,서울,양주',
@@ -25,12 +25,18 @@ def run(debug: bool = True):
         if location is not None
     ]
 
-    result = '[버스 위치 정보] ({})'.format(now.strftime('%Y-%m-%d %H:%M:%S'))\
-        + (('\n\n' + '\n'.join(locations)) if locations else ' - 결과 없음')
+    result = '[버스 위치 정보] ({})'.format(now.strftime('%Y-%m-%d %H:%M:%S'))
 
-    print(result)
-    if not debug:
-        log(result)
+    if locations:
+        result += '\n\n' + '\n'.join(locations)
+
+        print(result)
+        if not debug:
+            log(result)
+    else:
+        result += ' - 결과 없음'
+
+        print(result)
 
 
 if __name__ == '__main__':

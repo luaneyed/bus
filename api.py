@@ -3,6 +3,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from config import API
+from slack import log
 
 
 def call(service: str, params: dict):
@@ -22,7 +23,9 @@ def call(service: str, params: dict):
         return None
 
     if return_code != '0':
-        print('Error occurred! {}'.format(com_msg_header.find('errMsg').text))
-        return None
+        error_message = 'Error occurred! {}'.format(com_msg_header.find('errMsg').text)
+        print(error_message)
+        log(error_message)
+        exit(0)
 
     return xml_root.find('msgBody')
