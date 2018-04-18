@@ -12,7 +12,6 @@ def call(service: str, params: dict):
     request = Request('http://openapi.gbis.go.kr/ws/rest/' + service + '?' + urlencode(params))
     request.get_method = lambda: 'GET'
     response_body = urlopen(request).read().decode('utf-8')
-    # print(response_body)
     xml_root = Et.fromstring(response_body)
 
     com_msg_header = xml_root.find('comMsgHeader')
